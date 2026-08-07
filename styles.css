@@ -47,26 +47,52 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2px 2px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(255, 248, 216, 0.95), rgba(243, 228, 164, 0.92));
+  box-shadow: 0 6px 16px rgba(47, 34, 48, 0.08);
 }
 
 .toolbar-group {
   display: flex;
+  align-items: center;
   gap: 8px;
+}
+
+.toolbar-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 6px;
+  color: var(--burgundy);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.toolbar-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(167, 83, 117, 0.14);
+  color: var(--crimson);
 }
 
 .tool-btn,
 .action-btn {
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text);
+  border: 1px solid rgba(167, 83, 117, 0.16);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--burgundy);
   border-radius: 999px;
   padding: 7px 11px;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .action-btn.secondary {
-  color: var(--muted);
+  color: var(--rose-blue);
 }
 
 .editor-grid {
