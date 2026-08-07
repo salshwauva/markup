@@ -3,37 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Markdown Editor</title>
+    <title>MARKUP</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="editor-shell">
-      <div class="toolbar">
-        <div class="toolbar-group">
-          <div class="toolbar-title">
-            <span class="toolbar-icon">✎</span>
-            <span>Markup</span>
-          </div>
-          <button class="tool-btn" data-insert="# ">H1</button>
-          <button class="tool-btn" data-insert="## ">H2</button>
-          <button class="tool-btn" data-insert="- ">List</button>
-          <button class="tool-btn" data-insert="**bold**">Bold</button>
-          <button class="tool-btn" data-insert="*italic*">Italic</button>
+    <div id="app-window">
+      <div id="title-bar">
+        <div id="title-left">
+          <div id="title-left-icon"></div>
+          <span>MARKUP</span>
         </div>
-        <div class="toolbar-group">
-          <button id="previewToggle" class="action-btn">Preview</button>
-          <button id="saveBtn" class="action-btn">Save</button>
-          <button id="clearBtn" class="action-btn secondary">Reset</button>
+        <div id="title-right">
+          <span>_</span>
+          <span>□</span>
+          <span>X</span>
         </div>
       </div>
 
-      <div class="editor-grid">
-        <div class="editor-pane">
-          <pre id="highlightLayer" class="highlight-layer" aria-hidden="true"></pre>
-          <textarea id="editor" spellcheck="false"></textarea>
+      <div id="toolbar">
+        <button class="toolbar-button" data-insert="# "><div class="icon">H</div><span>H1</span></button>
+        <button class="toolbar-button" data-insert="## "><div class="icon">H</div><span>H2</span></button>
+        <button class="toolbar-button" data-insert="- "><div class="icon">•</div><span>LIST</span></button>
+        <button class="toolbar-button" data-insert="**bold**"><div class="icon">B</div><span>BOLD</span></button>
+        <button class="toolbar-button" data-insert="*italic*"><div class="icon">I</div><span>ITALIC</span></button>
+        <button id="previewToggle" class="toolbar-button"><div class="icon">P</div><span>PREVIEW</span></button>
+        <button id="saveBtn" class="toolbar-button"><div class="icon">S</div><span>SAVE</span></button>
+        <button id="clearBtn" class="toolbar-button"><div class="icon">N</div><span>NEW</span></button>
+      </div>
+
+      <div id="content-area">
+        <div class="editor-shell">
+          <div id="lineNumbers" class="line-numbers" aria-hidden="true"></div>
+          <div class="editor-pane">
+            <pre id="highlightLayer" class="highlight-layer" aria-hidden="true"></pre>
+            <textarea id="editor" spellcheck="false"></textarea>
+          </div>
         </div>
         <div id="previewPane" class="preview-pane">
           <div id="preview" class="preview-content"></div>
+        </div>
+      </div>
+
+      <div id="status-bar">
+        <div id="status-left">WORDS: 0 | LINE: 1 COL: 1 | SAVED OK</div>
+        <div id="status-right">
+          <span id="pencil-icon">✏️</span>
+          <span id="bunny-icon">🐰</span>
         </div>
       </div>
     </div>

@@ -4,9 +4,10 @@ const previewPane = document.getElementById('previewPane');
 const previewToggle = document.getElementById('previewToggle');
 const saveButton = document.getElementById('saveBtn');
 const clearButton = document.getElementById('clearBtn');
-const editorGrid = document.querySelector('.editor-grid');
 const highlightLayer = document.getElementById('highlightLayer');
-const editorPane = document.querySelector('.editor-pane');
+const lineNumbers = document.getElementById('lineNumbers');
+const contentArea = document.getElementById('content-area');
+const statusLeft = document.getElementById('status-left');
 
 const defaultContent = `# Welcome to your celestial note
 
@@ -31,9 +32,15 @@ function escapeHtml(text) {
     .replace(/"/g, '&quot;');
 }
 
-function syncHighlightScroll() {
+function syncScroll() {
   highlightLayer.scrollTop = editor.scrollTop;
   highlightLayer.scrollLeft = editor.scrollLeft;
+  lineNumbers.scrollTop = editor.scrollTop;
+}
+
+function renderLineNumbers() {
+  const count = Math.max(1, editor.value.split('\n').length);
+  lineNumbers.innerHTML = Array.from({ length: count }, (_, index) => `<div>${index + 1}</div>`).join('');
 }
 
 function renderHighlighting(markdown) {
@@ -62,20 +69,29 @@ function renderHighlighting(markdown) {
       }
     }
 
-    html.push(`<div class="line">${content || '&nbsp;'}</div>`);
+    html.push(`<div>${content || '&nbsp;'}</div>`);
   });
 
   highlightLayer.innerHTML = html.join('');
-  syncHighlightScroll();
+  syncScroll();
 }
 
 function renderMarkdown(markdown) {
   const lines = markdown.split(/\n/);
   const html = [];
   let inCodeBlock = false;
+  let listItems = [];
+
+  function flushList() {
+    if (listItems.length) {
+      html.push(`<ul>${listItems.join('')}</ul>`);
+      listItems = [];
+    }
+  }
 
   for (let line of lines) {
     if (line.startsWith('```')) {
+      flushList();
       inCodeBlock = !inCodeBlock;
       if (inCodeBlock) {
         html.push('<pre><code>');
@@ -91,11 +107,13 @@ function renderMarkdown(markdown) {
     }
 
     if (!line.trim()) {
+      flushList();
       html.push('<div class="spacer"></div>');
       continue;
     }
 
     if (/^#{1,3}\s/.test(line)) {
+      flushList();
       const level = line.match(/^#+/)[0].length;
       const content = line.replace(/^#{1,3}\s/, '');
       html.push(`<h${level}>${formatInline(content)}</h${level}>`);
@@ -103,20 +121,22 @@ function renderMarkdown(markdown) {
     }
 
     if (/^>\s/.test(line)) {
+      flushList();
       html.push(`<blockquote>${formatInline(line.replace(/^>\s/, ''))}</blockquote>`);
       continue;
     }
 
     if (/^[-*]\s/.test(line)) {
-      html.push(`<li>${formatInline(line.replace(/^[-*]\s/, ''))}</li>`);
+      listItems.push(`<li>${formatInline(line.replace(/^[-*]\s/, ''))}</li>`);
       continue;
     }
 
+    flushList();
     html.push(`<p>${formatInline(line)}</p>`);
   }
 
-  const content = html.join('');
-  preview.innerHTML = content.replace(/<li>/g, '<ul><li>').replace(/<\/li>/g, '</li></ul>');
+  flushList();
+  preview.innerHTML = html.join('');
 }
 
 function formatInline(text) {
@@ -127,29 +147,35 @@ function formatInline(text) {
   return value;
 }
 
+function updateStatus() {
+  const value = editor.value;
+  const beforeCursor = value.slice(0, editor.selectionStart);
+  const line = beforeCursor.split('\n').length;
+  const column = beforeCursor.split('\n').pop().length + 1;
+  const words = value.trim() ? value.trim().split(/\s+/).length : 0;
+  statusLeft.textContent = `WORDS: ${words} | LINE: ${line} COL: ${column} | SAVED OK`;
+}
+
 function loadContent() {
   const saved = localStorage.getItem('celestial-markdown-editor');
-  if (saved) {
-    editor.value = saved;
-  } else {
-    editor.value = defaultContent;
-  }
+  editor.value = saved || defaultContent;
   renderMarkdown(editor.value);
   renderHighlighting(editor.value);
+  renderLineNumbers();
+  updateStatus();
 }
 
 function saveContent() {
   localStorage.setItem('celestial-markdown-editor', editor.value);
-  saveButton.textContent = 'Saved';
-  window.setTimeout(() => {
-    saveButton.textContent = 'Save';
-  }, 900);
+  updateStatus();
 }
 
 function resetContent() {
   editor.value = defaultContent;
   renderMarkdown(defaultContent);
   renderHighlighting(defaultContent);
+  renderLineNumbers();
+  updateStatus();
   localStorage.removeItem('celestial-markdown-editor');
 }
 
@@ -163,13 +189,25 @@ function insertSnippet(snippet) {
   editor.setSelectionRange(cursor, cursor);
   renderMarkdown(editor.value);
   renderHighlighting(editor.value);
+  renderLineNumbers();
+  updateStatus();
+}
+
+function togglePreview() {
+  contentArea.classList.toggle('preview-hidden');
+  const hidden = contentArea.classList.contains('preview-hidden');
+  previewToggle.querySelector('span').textContent = hidden ? 'PREVIEW OFF' : 'PREVIEW';
 }
 
 editor.addEventListener('input', () => {
   renderMarkdown(editor.value);
   renderHighlighting(editor.value);
+  renderLineNumbers();
+  updateStatus();
 });
-editor.addEventListener('scroll', syncHighlightScroll);
+editor.addEventListener('scroll', syncScroll);
+editor.addEventListener('keyup', updateStatus);
+editor.addEventListener('click', updateStatus);
 editor.addEventListener('keydown', (event) => {
   if (event.key === 'Tab') {
     event.preventDefault();
@@ -177,17 +215,11 @@ editor.addEventListener('keydown', (event) => {
   }
 });
 
-function togglePreview() {
-  const isHidden = editorGrid.classList.toggle('preview-hidden');
-  previewPane.style.display = isHidden ? 'none' : 'block';
-  previewToggle.textContent = isHidden ? 'Preview Off' : 'Preview';
-}
-
 saveButton.addEventListener('click', saveContent);
 clearButton.addEventListener('click', resetContent);
 previewToggle.addEventListener('click', togglePreview);
 
-document.querySelectorAll('.tool-btn').forEach((button) => {
+document.querySelectorAll('.toolbar-button[data-insert]').forEach((button) => {
   button.addEventListener('click', () => {
     insertSnippet(button.dataset.insert || '');
   });
