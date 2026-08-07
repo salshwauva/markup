@@ -143,14 +143,17 @@ textarea:focus {
 .highlight-layer .token-link {
   color: var(--burgundy);
   text-decoration: underline;
+  text-decoration-color: var(--pink);
 }
 
 .highlight-layer .token-list {
   color: var(--purple);
+  font-weight: 600;
 }
 
 .highlight-layer .token-quote {
   color: var(--yellow);
+  font-style: italic;
 }
 
 .highlight-layer .token-code {
@@ -158,6 +161,10 @@ textarea:focus {
   background: rgba(192, 70, 77, 0.12);
   border-radius: 4px;
   padding: 0 0.2em;
+}
+
+.highlight-layer .line {
+  min-height: 1.6em;
 }
 
 .preview-pane {
