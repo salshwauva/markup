@@ -237,7 +237,7 @@ textarea:focus {
   padding: 0.8em 1em;
   border-left: 3px solid var(--crimson);
   color: var(--text);
-  background: rgba(179, 60, 97, 0.14);
+  background: #b9c8d9;
 }
 
 @media (max-width: 900px) {
