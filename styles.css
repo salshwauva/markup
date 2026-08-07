@@ -1,18 +1,18 @@
 :root {
   color-scheme: light;
-  --bg: #f7efe8;
-  --surface: #fffaf5;
-  --border: #e3cfd1;
-  --text: #2d1f24;
-  --muted: #6e5758;
-  --pink: #b84a72;
-  --purple: #6f4bc3;
-  --crimson: #a92f4b;
-  --rose-blue: #4b5d7a;
-  --yellow: #b57b1f;
-  --red: #c0464d;
-  --burgundy: #7d294e;
-  --deep: #efe0df;
+  --bg: #f4efe9;
+  --surface: #fcf9f4;
+  --border: #d8cfc5;
+  --text: #2f2724;
+  --muted: #6f635d;
+  --pink: #a85e73;
+  --purple: #6d5b8a;
+  --crimson: #8c4a58;
+  --rose-blue: #5d6f84;
+  --yellow: #9a6b2f;
+  --red: #9b4f4f;
+  --burgundy: #7a3f4d;
+  --deep: #ece2d8;
 }
 
 * {
@@ -25,8 +25,8 @@ body {
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(184, 74, 114, 0.16), transparent 24%),
-    radial-gradient(circle at bottom right, rgba(111, 75, 195, 0.14), transparent 28%),
+    radial-gradient(circle at top left, rgba(168, 94, 115, 0.11), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(109, 91, 138, 0.10), transparent 28%),
     linear-gradient(135deg, var(--bg), var(--deep));
 }
 
@@ -88,7 +88,7 @@ textarea,
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 22px rgba(47, 39, 36, 0.06);
 }
 
 .editor-pane {
@@ -131,7 +131,7 @@ textarea:focus {
 }
 
 .highlight-layer .token-strong {
-  color: var(--pink);
+  color: var(--burgundy);
   font-weight: 700;
 }
 
@@ -141,13 +141,13 @@ textarea:focus {
 }
 
 .highlight-layer .token-link {
-  color: var(--burgundy);
+  color: var(--purple);
   text-decoration: underline;
   text-decoration-color: var(--pink);
 }
 
 .highlight-layer .token-list {
-  color: var(--purple);
+  color: var(--pink);
   font-weight: 600;
 }
 
@@ -158,7 +158,7 @@ textarea:focus {
 
 .highlight-layer .token-code {
   color: var(--red);
-  background: rgba(192, 70, 77, 0.12);
+  background: rgba(155, 79, 79, 0.10);
   border-radius: 4px;
   padding: 0 0.2em;
 }
