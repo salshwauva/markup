@@ -65,7 +65,7 @@ textarea {
   align-items: center;
   gap: 8px;
   margin-right: 6px;
-  color: var(--burgundy);
+  color: white;
   font-weight: 700;
   letter-spacing: 0.02em;
 }
@@ -76,15 +76,15 @@ textarea {
   width: 24px;
   height: 24px;
   border-radius: 999px;
-  background: rgba(167, 83, 117, 0.14);
-  color: var(--crimson);
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
 }
 
 .tool-btn,
 .action-btn {
   border: 1px solid rgba(167, 83, 117, 0.16);
   background: rgba(255, 255, 255, 0.72);
-  color: var(--burgundy);
+  color: white;
   border-radius: 999px;
   padding: 7px 11px;
   cursor: pointer;
@@ -92,7 +92,7 @@ textarea {
 }
 
 .action-btn.secondary {
-  color: var(--rose-blue);
+  color: white;
 }
 
 .editor-grid {
