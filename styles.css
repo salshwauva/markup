@@ -1,8 +1,8 @@
 :root {
   color-scheme: light;
-  --bg: #f3e7eb;
-  --surface: #fbf5f8;
-  --border: #d7c2cc;
+  --bg: #f4e4a4;
+  --surface: #fff8d8;
+  --border: #d9c889;
   --text: #2f2230;
   --muted: #6f5b67;
   --pink: #c76b8f;
@@ -12,7 +12,7 @@
   --yellow: #a67a24;
   --red: #b64a4a;
   --burgundy: #7f314b;
-  --deep: #2c1724;
+  --deep: #e8c96c;
 }
 
 * {
@@ -25,8 +25,8 @@ body {
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(199, 107, 143, 0.16), transparent 24%),
-    radial-gradient(circle at bottom right, rgba(111, 90, 166, 0.14), transparent 28%),
+    radial-gradient(circle at top left, rgba(199, 107, 143, 0.12), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(111, 90, 166, 0.10), transparent 28%),
     linear-gradient(135deg, var(--bg), var(--deep));
 }
 
