@@ -6,6 +6,7 @@ const saveButton = document.getElementById('saveBtn');
 const clearButton = document.getElementById('clearBtn');
 const editorGrid = document.querySelector('.editor-grid');
 const highlightLayer = document.getElementById('highlightLayer');
+const editorPane = document.querySelector('.editor-pane');
 
 const defaultContent = `# Welcome to your celestial note
 
@@ -28,6 +29,11 @@ function escapeHtml(text) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+function syncHighlightScroll() {
+  highlightLayer.scrollTop = editor.scrollTop;
+  highlightLayer.scrollLeft = editor.scrollLeft;
 }
 
 function renderHighlighting(markdown) {
@@ -60,6 +66,7 @@ function renderHighlighting(markdown) {
   });
 
   highlightLayer.innerHTML = html.join('');
+  syncHighlightScroll();
 }
 
 function renderMarkdown(markdown) {
@@ -162,6 +169,7 @@ editor.addEventListener('input', () => {
   renderMarkdown(editor.value);
   renderHighlighting(editor.value);
 });
+editor.addEventListener('scroll', syncHighlightScroll);
 editor.addEventListener('keydown', (event) => {
   if (event.key === 'Tab') {
     event.preventDefault();

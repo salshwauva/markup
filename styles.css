@@ -94,6 +94,8 @@ textarea,
 .editor-pane {
   position: relative;
   min-height: 0;
+  overflow: hidden;
+  border-radius: 12px;
 }
 
 textarea {
@@ -106,7 +108,8 @@ textarea {
   border: none;
   position: absolute;
   inset: 0;
-  font: inherit;
+  font: 15px/1.6 "SFMono-Regular", Consolas, monospace;
+  overflow: auto;
 }
 
 textarea:focus {
@@ -120,9 +123,12 @@ textarea:focus {
   white-space: pre-wrap;
   word-break: break-word;
   line-height: 1.6;
-  font: inherit;
+  font: 15px/1.6 "SFMono-Regular", Consolas, monospace;
   color: var(--text);
   pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: auto;
 }
 
 .highlight-layer .token-heading {
